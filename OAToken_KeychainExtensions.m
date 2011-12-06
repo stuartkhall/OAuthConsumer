@@ -16,7 +16,7 @@
     SecKeychainItemRef item;
 	NSString *serviceName = [NSString stringWithFormat:@"%@::OAuth::%@", name, provider];
 	OSStatus status = SecKeychainFindGenericPassword(NULL,
-													 strlen([serviceName UTF8String]),
+													 (UInt32)strlen([serviceName UTF8String]),
 													 [serviceName UTF8String],
 													 0,
 													 NULL,
@@ -81,11 +81,11 @@
 - (OSStatus)storeInKeychain:(SecKeychainRef)keychain appName:(NSString *)name serviceProviderName:(NSString *)provider 
 {
 	OSStatus status = SecKeychainAddGenericPassword(keychain,                                     
-                                                    [name length] + [provider length] + 9, 
+                                                    (UInt32)([name length] + [provider length] + 9), 
                                                     [[NSString stringWithFormat:@"%@::OAuth::%@", name, provider] UTF8String],
-                                                    [self.key length],                        
+                                                    (UInt32)[self.key length],                        
                                                     [self.key UTF8String],
-                                                    [self.secret length],
+                                                    (UInt32)[self.secret length],
                                                     [self.secret UTF8String],
                                                     NULL
                                                     );
